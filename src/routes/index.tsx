@@ -170,8 +170,19 @@ function Forgive({ onYes }: { onYes: () => void }) {
         eu sei que pisei na bola. prometo melhorar.
       </p>
 
-      <div className="relative mt-8 flex h-44 items-center justify-center">
-        <PrimaryButton onClick={onYes}>sim 💗</PrimaryButton>
+      <div className="relative mt-8 flex items-center justify-center gap-4">
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          onClick={onYes}
+          className="rounded-full px-6 py-3.5 text-base font-semibold text-white shadow-lg"
+          style={{
+            background: "linear-gradient(135deg, #FF7A8A 0%, #FF5A75 100%)",
+            boxShadow: "0 10px 30px -10px rgba(255,90,117,0.7)",
+            WebkitTapHighlightColor: "transparent",
+          }}
+        >
+          sim 💗
+        </motion.button>
         <DodgyNoButton />
       </div>
     </Card>
@@ -184,6 +195,7 @@ function DodgyNoButton() {
   const [scale, setScale] = useState(1);
   const [hidden, setHidden] = useState(false);
   const dodgesRef = useRef(0);
+  const lastDodgeRef = useRef(0);
 
   useEffect(() => {
     if (hidden) return;
@@ -197,14 +209,19 @@ function DodgyNoButton() {
       const dx = clientX - cx;
       const dy = clientY - cy;
       const dist = Math.hypot(dx, dy);
-      const trigger = 90;
+      const trigger = 110;
       if (dist > trigger) return;
+
+      // Throttle: only dodge every 180ms
+      const now = Date.now();
+      if (now - lastDodgeRef.current < 180) return;
+      lastDodgeRef.current = now;
 
       // Push opposite to finger/cursor
       const norm = dist === 0 ? 1 : dist;
       const ux = -dx / norm;
       const uy = -dy / norm;
-      const push = 80 + Math.random() * 60;
+      const push = 50 + Math.random() * 30;
 
       // Keep within viewport
       const vw = window.innerWidth;
@@ -214,10 +231,9 @@ function DodgyNoButton() {
       const h = rect.height;
 
       setPos((prev) => {
-        let nx = prev.x + ux * push + (Math.random() - 0.5) * 40;
-        let ny = prev.y + uy * push + (Math.random() - 0.5) * 40;
+        let nx = prev.x + ux * push + (Math.random() - 0.5) * 20;
+        let ny = prev.y + uy * push + (Math.random() - 0.5) * 20;
 
-        // current absolute center prediction
         const futureLeft = rect.left + (nx - prev.x);
         const futureTop = rect.top + (ny - prev.y);
         if (futureLeft < margin) nx += margin - futureLeft;
@@ -231,9 +247,9 @@ function DodgyNoButton() {
       });
 
       dodgesRef.current += 1;
-      setScale((s) => Math.max(0.5, s * 0.92));
+      setScale((s) => Math.max(0.55, s * 0.94));
       if (dodgesRef.current >= 7) {
-        setTimeout(() => setHidden(true), 150);
+        setTimeout(() => setHidden(true), 200);
       }
     };
 
@@ -261,8 +277,8 @@ function DodgyNoButton() {
       type="button"
       onClick={(e) => e.preventDefault()}
       animate={{ x: pos.x, y: pos.y, scale }}
-      transition={{ type: "spring", damping: 14, stiffness: 260 }}
-      className="absolute select-none rounded-full px-5 py-2.5 text-sm font-medium"
+      transition={{ type: "spring", damping: 22, stiffness: 120, mass: 1.2 }}
+      className="select-none rounded-full px-6 py-3.5 text-base font-medium"
       style={{
         background: "#FFE4E8",
         color: "#7A2E3F",
