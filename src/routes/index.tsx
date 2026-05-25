@@ -266,8 +266,8 @@ function DodgyNoButton() {
       type="button"
       onClick={(e) => e.preventDefault()}
       animate={{ x: pos.x, y: pos.y, scale }}
-      transition={{ type: "spring", damping: 14, stiffness: 260 }}
-      className="absolute select-none rounded-full px-5 py-2.5 text-sm font-medium"
+      transition={{ type: "spring", damping: 22, stiffness: 120, mass: 1.2 }}
+      className="select-none rounded-full px-6 py-3.5 text-base font-medium"
       style={{
         background: "#FFE4E8",
         color: "#7A2E3F",
