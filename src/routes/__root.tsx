@@ -72,37 +72,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
+      { title: "me desculpa, Alexa? 💌" },
       {
         name: "description",
-        content:
-          "Interactive web application that brings user-submitted video concepts to life with dynamic elements.",
+        content: "uma desculpa de verdade, pra você sorrir de novo 💗",
       },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
+      { property: "og:title", content: "me desculpa, Alexa? 💌" },
       {
         property: "og:description",
-        content:
-          "Interactive web application that brings user-submitted video concepts to life with dynamic elements.",
+        content: "uma desculpa de verdade, pra você sorrir de novo 💗",
       },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
-      {
-        name: "twitter:description",
-        content:
-          "Interactive web application that brings user-submitted video concepts to life with dynamic elements.",
-      },
+      { property: "og:url", content: "https://wacubaforever.top" },
       {
         property: "og:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7ac14c9a-7045-4ae7-b755-5ecdbaeaf1c0/id-preview-d1b1ab5c--80d8c038-83e8-4d7c-9d11-139ddb9861a8.lovable.app-1779737868526.png",
+        content: "https://wacubaforever.top/memes/tiramisu.jpg",
+      },
+      { property: "og:image:width", content: "256" },
+      { property: "og:image:height", content: "192" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "me desculpa, Alexa? 💌" },
+      {
+        name: "twitter:description",
+        content: "uma desculpa de verdade, pra você sorrir de novo 💗",
       },
       {
         name: "twitter:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7ac14c9a-7045-4ae7-b755-5ecdbaeaf1c0/id-preview-d1b1ab5c--80d8c038-83e8-4d7c-9d11-139ddb9861a8.lovable.app-1779737868526.png",
+        content: "https://wacubaforever.top/memes/tiramisu.jpg",
       },
     ],
     links: [
