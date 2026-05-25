@@ -184,6 +184,7 @@ function DodgyNoButton() {
   const [scale, setScale] = useState(1);
   const [hidden, setHidden] = useState(false);
   const dodgesRef = useRef(0);
+  const lastDodgeRef = useRef(0);
 
   useEffect(() => {
     if (hidden) return;
