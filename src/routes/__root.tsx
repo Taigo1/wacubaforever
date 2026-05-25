@@ -72,34 +72,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "me desculpa, Alexa? 💌" },
-      {
-        name: "description",
-        content: "uma desculpa de verdade, pra você sorrir de novo 💗",
-      },
-      { property: "og:title", content: "me desculpa, Alexa? 💌" },
-      {
-        property: "og:description",
-        content: "uma desculpa de verdade, pra você sorrir de novo 💗",
-      },
+      { title: "Fica com neguinho garoto de programa?" },
+      { name: "description", content: "saudade vida" },
+      { property: "og:title", content: "Fica com neguinho garoto de programa?" },
+      { property: "og:description", content: "saudade vida" },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://wacubaforever.top" },
-      {
-        property: "og:image",
-        content: "https://wacubaforever.top/memes/tiramisu.jpg",
-      },
-      { property: "og:image:width", content: "256" },
-      { property: "og:image:height", content: "192" },
+      { property: "og:image", content: "https://wacubaforever.top/preview.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "me desculpa, Alexa? 💌" },
-      {
-        name: "twitter:description",
-        content: "uma desculpa de verdade, pra você sorrir de novo 💗",
-      },
-      {
-        name: "twitter:image",
-        content: "https://wacubaforever.top/memes/tiramisu.jpg",
-      },
+      { name: "twitter:title", content: "Fica com neguinho garoto de programa?" },
+      { name: "twitter:description", content: "saudade vida" },
+      { name: "twitter:image", content: "https://wacubaforever.top/preview.jpg" },
     ],
     links: [
       {
