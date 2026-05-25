@@ -171,7 +171,18 @@ function Forgive({ onYes }: { onYes: () => void }) {
       </p>
 
       <div className="relative mt-8 flex items-center justify-center gap-4">
-        <InlinePrimaryButton onClick={onYes}>sim 💗</InlinePrimaryButton>
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          onClick={onYes}
+          className="rounded-full px-6 py-3.5 text-base font-semibold text-white shadow-lg"
+          style={{
+            background: "linear-gradient(135deg, #FF7A8A 0%, #FF5A75 100%)",
+            boxShadow: "0 10px 30px -10px rgba(255,90,117,0.7)",
+            WebkitTapHighlightColor: "transparent",
+          }}
+        >
+          sim 💗
+        </motion.button>
         <DodgyNoButton />
       </div>
     </Card>
