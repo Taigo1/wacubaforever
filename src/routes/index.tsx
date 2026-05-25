@@ -77,9 +77,9 @@ function FontLoader() {
 type FloatKind = "heart" | "flag" | "chibi";
 
 function FloatingPetals() {
-  const heartCount = 14;
-  const flagCount = 10;
-  const chibiCount = 11;
+  const heartCount = 36;
+  const flagCount = 26;
+  const chibiCount = 22;
   const items = Array.from({ length: heartCount + flagCount + chibiCount }, (_, i) => {
     let kind: FloatKind = "heart";
     if (i >= heartCount && i < heartCount + flagCount) kind = "flag";
@@ -162,11 +162,12 @@ const memeFiles = [
   "/memes/moleque.jpg",
   "/memes/sim-fogo.jpg",
   "/memes/sim-pc.jpg",
+  "/memes/triceramisu.jpg",
+  "/memes/carbonara.jpg",
 ];
 
-// Spread positions across the viewport, slightly off the card area. Mixed
-// rotations and sizes give a sticker-board feel. Duplicated entries are OK —
-// the user explicitly asked for repeats to make the site feel busy/fun.
+// Each of the 4 originals appears once; the remaining slots use triceramisu
+// (replacing the duplicates as requested).
 const memeStickers: Array<{
   src: string;
   top: string;
@@ -179,12 +180,12 @@ const memeStickers: Array<{
   { src: memeFiles[2], top: "8%", left: "82%", size: 130, rotate: 9, delay: 0.6 },
   { src: memeFiles[3], top: "70%", left: "3%", size: 150, rotate: 6, delay: 1.2 },
   { src: memeFiles[1], top: "72%", left: "84%", size: 120, rotate: -8, delay: 0.3 },
-  { src: memeFiles[0], top: "40%", left: "1%", size: 110, rotate: 14, delay: 1.5 },
-  { src: memeFiles[2], top: "42%", left: "88%", size: 115, rotate: -10, delay: 0.9 },
-  { src: memeFiles[3], top: "22%", left: "90%", size: 95, rotate: 18, delay: 1.8 },
-  { src: memeFiles[1], top: "55%", left: "92%", size: 100, rotate: -6, delay: 2.1 },
-  { src: memeFiles[0], top: "85%", left: "45%", size: 105, rotate: -4, delay: 0.4 },
-  { src: memeFiles[3], top: "2%", left: "45%", size: 95, rotate: 7, delay: 1.0 },
+  { src: memeFiles[4], top: "40%", left: "1%", size: 110, rotate: 14, delay: 1.5 },
+  { src: memeFiles[4], top: "40%", left: "88%", size: 110, rotate: -14, delay: 0.9 },
+  { src: memeFiles[4], top: "85%", left: "45%", size: 105, rotate: -4, delay: 0.4 },
+  { src: memeFiles[4], top: "2%", left: "45%", size: 95, rotate: 7, delay: 1.0 },
+  { src: memeFiles[5], top: "25%", left: "72%", size: 125, rotate: 11, delay: 1.4 },
+  { src: memeFiles[5], top: "60%", left: "10%", size: 115, rotate: -9, delay: 0.7 },
 ];
 
 function FloatingMemes() {
@@ -226,15 +227,30 @@ function FloatingMemes() {
 }
 
 /* ---------------- Card wrapper ---------------- */
-function Card({ children }: { children: React.ReactNode }) {
+function Card({
+  children,
+  bgImage,
+  bgPosition = "center",
+}: {
+  children: React.ReactNode;
+  bgImage?: string;
+  bgPosition?: string;
+}) {
+  const bgStyle: React.CSSProperties = bgImage
+    ? {
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)), url('${bgImage}')`,
+        backgroundSize: "cover",
+        backgroundPosition: bgPosition,
+      }
+    : {};
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -20, scale: 0.96 }}
       transition={{ type: "spring", damping: 20, stiffness: 180 }}
-      className="w-full max-w-md rounded-[28px] bg-white/80 px-7 py-10 text-center shadow-[0_20px_60px_-20px_rgba(255,122,138,0.45)] backdrop-blur"
-      style={{ border: "1px solid rgba(255,179,190,0.4)" }}
+      className={`w-full max-w-md rounded-[28px] px-7 py-10 text-center shadow-[0_20px_60px_-20px_rgba(255,122,138,0.45)] backdrop-blur ${bgImage ? "" : "bg-white/80"}`}
+      style={{ border: "1px solid rgba(255,179,190,0.4)", ...bgStyle }}
     >
       {children}
     </motion.div>
@@ -253,7 +269,43 @@ const titleStyle: React.CSSProperties = {
 function Intro({ onNext }: { onNext: () => void }) {
   return (
     <Card>
-      <div className="mb-4 text-3xl">🌸</div>
+      <div className="mb-6 pt-2">
+        <span className="relative inline-block">
+          <span className="shiny-bandiva" style={{ fontSize: "3.5rem", lineHeight: 1 }}>
+            Alexa
+          </span>
+          <motion.span
+            aria-hidden
+            style={{ position: "absolute", top: -8, right: -10, fontSize: 18 }}
+            animate={{ scale: [0, 1, 0], rotate: [0, 180] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          >
+            ✨
+          </motion.span>
+          <motion.span
+            aria-hidden
+            style={{ position: "absolute", bottom: -6, left: -10, fontSize: 16 }}
+            animate={{ scale: [0, 1, 0], rotate: [0, -180] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+          >
+            ✨
+          </motion.span>
+          <motion.span
+            aria-hidden
+            style={{
+              position: "absolute",
+              top: "50%",
+              right: "100%",
+              marginRight: 12,
+              fontSize: 14,
+            }}
+            animate={{ scale: [0, 1, 0], rotate: [0, 360] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+          >
+            ✨
+          </motion.span>
+        </span>
+      </div>
       <h1 className="text-5xl" style={titleStyle}>
         me desculpa?
       </h1>
@@ -495,24 +547,24 @@ function PickDate({
   setMessage: (v: string) => void;
   onNext: () => void;
 }) {
-  const namiBg: React.CSSProperties = {
-    backgroundImage:
-      "linear-gradient(rgba(8, 28, 50, 0.55), rgba(8, 28, 50, 0.55)), url('/nami.jpg')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    border: "1px solid #FFC8D0",
-    color: "#ffffff",
-    fontFamily: "inherit",
-    colorScheme: "dark",
-    textShadow: "0 1px 2px rgba(0,0,0,0.55)",
-  };
-
   return (
-    <Card>
-      <h1 className="text-4xl" style={titleStyle}>
+    <Card bgImage="/nami.jpg" bgPosition="right center">
+      <h1
+        className="text-4xl"
+        style={{
+          ...titleStyle,
+          textShadow:
+            "0 0 6px rgba(255,255,255,0.95), 0 0 14px rgba(255,255,255,0.7), 0 1px 2px rgba(0,0,0,0.15)",
+        }}
+      >
         então, como e quando posso te recompensar?
       </h1>
-      <p className="mt-4 text-sm text-[#7A2E3F]/70">
+      <p
+        className="mt-4 text-sm font-medium text-[#7A2E3F]"
+        style={{
+          textShadow: "0 0 4px rgba(255,255,255,0.95), 0 0 10px rgba(255,255,255,0.7)",
+        }}
+      >
         escolhe um dia. eu apareço com tudo que você quer.
       </p>
 
@@ -520,8 +572,12 @@ function PickDate({
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="mt-6 w-full rounded-2xl px-4 py-3 text-center text-base outline-none"
-        style={namiBg}
+        className="mt-6 w-full rounded-2xl bg-white/90 px-4 py-3 text-center text-base outline-none"
+        style={{
+          border: "1px solid #FFC8D0",
+          color: "#7A2E3F",
+          fontFamily: "inherit",
+        }}
       />
 
       <textarea
@@ -529,8 +585,12 @@ function PickDate({
         onChange={(e) => setMessage(e.target.value)}
         placeholder="me conta o que você quer..."
         rows={3}
-        className="mt-3 w-full resize-none rounded-2xl px-4 py-3 text-base outline-none placeholder:text-white/70"
-        style={namiBg}
+        className="mt-3 w-full resize-none rounded-2xl bg-white/90 px-4 py-3 text-base outline-none"
+        style={{
+          border: "1px solid #FFC8D0",
+          color: "#7A2E3F",
+          fontFamily: "inherit",
+        }}
       />
 
       <PrimaryButton onClick={onNext} disabled={!date}>
@@ -562,7 +622,7 @@ function Final({ date, message }: { date: string; message: string }) {
         marcado pra {pretty}
       </h1>
       <p className="mt-4 text-sm text-[#7A2E3F]/70">
-        obrigado por não desistir de mim. te vejo nesse dia. ✨
+        Obrigado por ser compreensiva, linda. Te vejo nesse dia.
       </p>
       <div className="mt-6 flex justify-center gap-2 text-2xl">
         <motion.span animate={{ y: [0, -8, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>
