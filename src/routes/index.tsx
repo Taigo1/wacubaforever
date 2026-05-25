@@ -383,18 +383,20 @@ function DodgyNoButton({ onPosChange }: { onPosChange?: (pos: { x: number; y: nu
       const dx = clientX - cx;
       const dy = clientY - cy;
       const dist = Math.hypot(dx, dy);
-      const trigger = phase === 3 ? 160 : 110;
+      const trigger = phase === 3 ? 180 : 130;
       if (dist > trigger) return;
 
       const now = Date.now();
-      const throttle = phase === 3 ? 60 : 180;
+      const throttle = phase === 3 ? 40 : 100;
       if (now - lastDodgeRef.current < throttle) return;
       lastDodgeRef.current = now;
 
       const norm = dist === 0 ? 1 : dist;
       const ux = -dx / norm;
       const uy = -dy / norm;
-      const push = phase === 3 ? 110 + Math.random() * 40 : 50 + Math.random() * 30;
+      // Phase 3 takes short rapid hops so the text stays readable while being
+      // impossible to catch. Phases 1-2 use larger jumps and a slower cadence.
+      const push = phase === 3 ? 60 + Math.random() * 30 : 70 + Math.random() * 30;
 
       const vw = window.innerWidth;
       const vh = window.innerHeight;
@@ -417,7 +419,7 @@ function DodgyNoButton({ onPosChange }: { onPosChange?: (pos: { x: number; y: nu
       });
 
       dodgesRef.current += 1;
-      if (phase !== 3 && dodgesRef.current >= 3) {
+      if (phase !== 3 && dodgesRef.current >= 5) {
         setClickable(true);
       }
     };
@@ -460,8 +462,8 @@ function DodgyNoButton({ onPosChange }: { onPosChange?: (pos: { x: number; y: nu
 
   const spring =
     phase === 3
-      ? { type: "spring" as const, damping: 14, stiffness: 320, mass: 0.65 }
-      : { type: "spring" as const, damping: 22, stiffness: 120, mass: 1.2 };
+      ? { type: "spring" as const, damping: 24, stiffness: 380, mass: 0.5 }
+      : { type: "spring" as const, damping: 20, stiffness: 200, mass: 0.9 };
 
   // Phase 1 occupies the right half of the box. Phases 2/3 size to content
   // so the longer texts fit naturally — the dodge transform places them wherever.
