@@ -197,14 +197,19 @@ function DodgyNoButton() {
       const dx = clientX - cx;
       const dy = clientY - cy;
       const dist = Math.hypot(dx, dy);
-      const trigger = 90;
+      const trigger = 110;
       if (dist > trigger) return;
+
+      // Throttle: only dodge every 180ms
+      const now = Date.now();
+      if (now - lastDodgeRef.current < 180) return;
+      lastDodgeRef.current = now;
 
       // Push opposite to finger/cursor
       const norm = dist === 0 ? 1 : dist;
       const ux = -dx / norm;
       const uy = -dy / norm;
-      const push = 80 + Math.random() * 60;
+      const push = 50 + Math.random() * 30;
 
       // Keep within viewport
       const vw = window.innerWidth;
@@ -214,10 +219,9 @@ function DodgyNoButton() {
       const h = rect.height;
 
       setPos((prev) => {
-        let nx = prev.x + ux * push + (Math.random() - 0.5) * 40;
-        let ny = prev.y + uy * push + (Math.random() - 0.5) * 40;
+        let nx = prev.x + ux * push + (Math.random() - 0.5) * 20;
+        let ny = prev.y + uy * push + (Math.random() - 0.5) * 20;
 
-        // current absolute center prediction
         const futureLeft = rect.left + (nx - prev.x);
         const futureTop = rect.top + (ny - prev.y);
         if (futureLeft < margin) nx += margin - futureLeft;
@@ -231,9 +235,9 @@ function DodgyNoButton() {
       });
 
       dodgesRef.current += 1;
-      setScale((s) => Math.max(0.5, s * 0.92));
+      setScale((s) => Math.max(0.55, s * 0.94));
       if (dodgesRef.current >= 7) {
-        setTimeout(() => setHidden(true), 150);
+        setTimeout(() => setHidden(true), 200);
       }
     };
 
