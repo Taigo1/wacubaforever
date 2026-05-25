@@ -170,8 +170,8 @@ function Forgive({ onYes }: { onYes: () => void }) {
         eu sei que pisei na bola. prometo melhorar.
       </p>
 
-      <div className="relative mt-8 flex h-44 items-center justify-center">
-        <PrimaryButton onClick={onYes}>sim 💗</PrimaryButton>
+      <div className="relative mt-8 flex items-center justify-center gap-4">
+        <InlinePrimaryButton onClick={onYes}>sim 💗</InlinePrimaryButton>
         <DodgyNoButton />
       </div>
     </Card>
